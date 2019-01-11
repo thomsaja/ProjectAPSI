@@ -115,17 +115,17 @@
                       </Group>
                   </Group>
                   <Component id="formlogin" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="id" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="password" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="status" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtID" alignment="1" min="-2" pref="91" max="-2" attributes="0"/>
-                          <Component id="txtPASSWORD" alignment="1" min="-2" pref="91" max="-2" attributes="0"/>
-                          <Component id="txtNAME" alignment="1" min="-2" pref="91" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txtID" alignment="1" pref="91" max="32767" attributes="0"/>
+                          <Component id="txtPASSWORD" alignment="1" max="32767" attributes="0"/>
+                          <Component id="state" alignment="1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -152,13 +152,13 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNAME" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="password" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtPASSWORD" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="password" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtPASSWORD" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="state" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="status" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -283,11 +283,23 @@
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtPASSWORD">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtNAME">
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JComboBox" name="state">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nama"/>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="Status:"/>
+            <StringItem index="1" value="Admin"/>
+            <StringItem index="2" value="Pegawai"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="status">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Status"/>
       </Properties>
     </Component>
   </SubComponents>

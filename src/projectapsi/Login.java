@@ -27,14 +27,12 @@ public class Login extends javax.swing.JFrame {
     protected void aktif() {
         txtID.setEnabled(true);
         txtPASSWORD.setEnabled(true);
-        txtNAME.setEnabled(true);
         txtID.requestFocus();
     }
 
     protected void kosong() {
         txtID.setText("");
         txtPASSWORD.setText("");
-        txtNAME.setText("");
     }
 
     protected void datatable() {
@@ -89,8 +87,8 @@ public class Login extends javax.swing.JFrame {
         update = new javax.swing.JButton();
         delete = new javax.swing.JToggleButton();
         txtPASSWORD = new javax.swing.JPasswordField();
-        txtNAME = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        state = new javax.swing.JComboBox<>();
+        status = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -203,7 +201,9 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Nama");
+        state.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Status:", "Admin", "Pegawai" }));
+
+        status.setText("Status");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -221,16 +221,16 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(register, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(formlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(id)
                             .addComponent(password)
-                            .addComponent(jLabel1))
+                            .addComponent(status))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPASSWORD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNAME, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                            .addComponent(txtPASSWORD, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(state, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(close, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -250,12 +250,12 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(id))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtNAME, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(password)
                             .addComponent(txtPASSWORD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(state, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(status))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(login)
@@ -274,11 +274,10 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        String sql = "select * from Human where Id=? and Password=? and Nama= ?";
+        String sql = "select * from Human where Id=? and Password=?";
         try {
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setString(1, txtID.getText());
-            stat.setString(3, txtNAME.getText());
             stat.setString(2, txtPASSWORD.getText().toLowerCase());
             rs = stat.executeQuery();
             if (rs.next()) {
@@ -299,14 +298,9 @@ public class Login extends javax.swing.JFrame {
         String sql = "insert into Human (Id, Password, Nama) values (?,?,?)";
         try {
             PreparedStatement stat = conn.prepareStatement(sql);
-
-            dataku.clear();
-            dataku.add(txtID.getText());
-            dataku.add(txtPASSWORD.getText().toLowerCase());
-            dataku.add(txtNAME.getText());
-            for (int i = 0; i < dataku.size(); i++) {
-                stat.setString(i + 1, dataku.get(i));
-            }
+            stat.setString(1, txtID.getText());
+            stat.setString(2, txtPASSWORD.getText().toLowerCase());
+            rs = stat.executeQuery();
 
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "Saved", "Register", JOptionPane.INFORMATION_MESSAGE);
@@ -333,20 +327,14 @@ public class Login extends javax.swing.JFrame {
         String b = tabmode.getValueAt(bar, 1).toString();
 
         txtID.setText(a);
-        txtNAME.setText(b);
     }//GEN-LAST:event_tabledaftarMouseClicked
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         try {
-            String sql = "update Human set Password=?, Nama=? where Id='" + txtID.getText() + "'";
+            String sql = "update Human set Password=? where Id='" + txtID.getText() + "'";
             PreparedStatement stat = conn.prepareStatement(sql);
-
-            dataku.clear();
-            dataku.add(txtPASSWORD.getText().toLowerCase());
-            dataku.add(txtNAME.getText());
-            for (int i = 0; i < dataku.size(); i++) {
-                stat.setString(i + 1, dataku.get(i));
-            }
+            stat.setString(1, txtPASSWORD.getText().toLowerCase());
+            rs = stat.executeQuery();
 
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "Saved", "Update", JOptionPane.INFORMATION_MESSAGE);
@@ -416,7 +404,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JToggleButton delete;
     private javax.swing.JLabel formlogin;
     private javax.swing.JLabel id;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -427,9 +414,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton login;
     private javax.swing.JLabel password;
     private javax.swing.JButton register;
+    private javax.swing.JComboBox<String> state;
+    private javax.swing.JLabel status;
     private javax.swing.JTable tabledaftar;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtNAME;
     private javax.swing.JPasswordField txtPASSWORD;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables

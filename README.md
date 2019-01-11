@@ -1,2 +1,2 @@
 # ProjectAPSI
-Project APSI
+ProjectAPSI
